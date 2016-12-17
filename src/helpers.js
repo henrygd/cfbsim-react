@@ -91,7 +91,7 @@ export const simGame = (teamOne, teamTwo, gamesNum=500) => {
 		teamOneScore = 0;
 		teamTwoScore = 0;
 		// ten possesions for each team
-		for (var possesions = 0; possesions < 14; possesions++) {
+		for (var possesions = 0; possesions < 13; possesions++) {
 			teamOneScore += teamOne.driveAgainst( teamTwo );
 			teamTwoScore += teamTwo.driveAgainst( teamOne );
 		}
