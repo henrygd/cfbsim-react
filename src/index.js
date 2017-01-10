@@ -63,7 +63,6 @@ fetch(`/js/teamratings.json?${+new Date()}`).then(r => r.json())
 				// get logos
 				fetch('/js/localStoreTeams.json').then(r => r.json())
 					.then(teamData => {
-						console.log(teamData);
 						teamData.forEach(teamArr => {
 							var teamName = teamArr[0];
 							localStorage['logo_' + teamName] = teamArr[1];

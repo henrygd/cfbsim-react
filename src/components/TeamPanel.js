@@ -4,13 +4,15 @@ import { randomTeam } from '../helpers';
 
 const TeamPanel = React.createClass({
 	getInitialState: () => ({
-		dropdownOpen: false
+		dropdownOpen: false,
+		searchVal: ''
 	}),
 	render() {
 		const props = this.props;
 		const ratingArr = props.team[1];
 		const teamKeys = window.teamKeys;
 		const teamListItem = (team, i) => <li onClick={this.getThisTeam} key={i}>{team}</li>;
+		const searchBar = <input type="text" placeholder="Search..." value={this.state.searchVal} onChange={this.updateSearch}/>;
 
 		return (<div className='team-panel'>
 				<div className='logo-container scanlines'>
@@ -25,30 +27,39 @@ const TeamPanel = React.createClass({
 						<span className='team-name'>{ props.team[0] }</span>
 					</div>
 
-					<ul className='select-options'>
-						<h4>American Athletic</h4>
-							{teamKeys.slice(0, 12).map((team, i) => teamListItem(team, i))}
-						<h4>ACC</h4>
-							{teamKeys.slice(12, 26).map((team, i) => teamListItem(team, i))}
-						<h4>Big 12</h4>
-							{teamKeys.slice(26, 36).map((team, i) => teamListItem(team, i))}
-						<h4>Big Ten</h4>
-							{teamKeys.slice(36, 50).map((team, i) => teamListItem(team, i))}
-						<h4>Conference USA</h4>
-							{teamKeys.slice(50, 63).map((team, i) => teamListItem(team, i))}
-						<h4>Independents</h4>
-							{teamKeys.slice(63, 67).map((team, i) => teamListItem(team, i))}
-						<h4>Mid-American</h4>
-							{teamKeys.slice(67, 79).map((team, i) => teamListItem(team, i))}
-						<h4>Mountain West</h4>
-							{teamKeys.slice(79, 91).map((team, i) => teamListItem(team, i))}
-						<h4>PAC 12</h4>
-							{teamKeys.slice(91, 103).map((team, i) => teamListItem(team, i))}
-						<h4>SEC</h4>
-							{teamKeys.slice(103, 117).map((team, i) => teamListItem(team, i))}
-						<h4>Sun Belt</h4>
-							{teamKeys.slice(117, 128).map((team, i) => teamListItem(team, i))}
-					</ul>
+						{this.state.searchVal ? (
+							<ul className='select-options'>
+								{searchBar}
+								{teamKeys.filter(team => team.match(RegExp(this.state.searchVal, 'i'))).map((team, i) => teamListItem(team, i))}
+							</ul>
+						) : (
+							<ul className='select-options'>
+								{searchBar}
+								<h4>American Athletic</h4>
+									{teamKeys.slice(0, 12).map((team, i) => teamListItem(team, i))}
+								<h4>ACC</h4>
+									{teamKeys.slice(12, 26).map((team, i) => teamListItem(team, i))}
+								<h4>Big 12</h4>
+									{teamKeys.slice(26, 36).map((team, i) => teamListItem(team, i))}
+								<h4>Big Ten</h4>
+									{teamKeys.slice(36, 50).map((team, i) => teamListItem(team, i))}
+								<h4>Conference USA</h4>
+									{teamKeys.slice(50, 63).map((team, i) => teamListItem(team, i))}
+								<h4>Independents</h4>
+									{teamKeys.slice(63, 67).map((team, i) => teamListItem(team, i))}
+								<h4>Mid-American</h4>
+									{teamKeys.slice(67, 79).map((team, i) => teamListItem(team, i))}
+								<h4>Mountain West</h4>
+									{teamKeys.slice(79, 91).map((team, i) => teamListItem(team, i))}
+								<h4>PAC 12</h4>
+									{teamKeys.slice(91, 103).map((team, i) => teamListItem(team, i))}
+								<h4>SEC</h4>
+									{teamKeys.slice(103, 117).map((team, i) => teamListItem(team, i))}
+								<h4>Sun Belt</h4>
+									{teamKeys.slice(117, 128).map((team, i) => teamListItem(team, i))}
+							</ul>
+						)}
+
 				</div>
 
 					<div className='rating panel-cell overall scanlines' style={{backgroundColor: 'rgba(' + this.getOverallColor() + ', .85)'}}>
@@ -67,6 +78,10 @@ const TeamPanel = React.createClass({
 				</div>
 			</div>);
 	},
+	updateSearch(e) {
+		const val = e.target.value;
+		this.setState({searchVal: val});
+	},
 	getOverallColor() {
 		const overall = this.props.team[1][0];
 		if (overall < 50) {
@@ -80,8 +95,10 @@ const TeamPanel = React.createClass({
 		this.props.changeTeam(team);
 		this.toggleDropdown();
 	},
-	toggleDropdown() {
+	toggleDropdown(e) {
 		const { dropdownOpen } = this.state;
+		if (e.target.tagName === 'INPUT')
+			return false
 		this.setState({ dropdownOpen: !dropdownOpen })
 	},
 	adjustMeter(rating) {

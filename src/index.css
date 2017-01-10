@@ -625,26 +625,45 @@ ul.select-options {
 		margin: 0;
 		width: 100%;
 		font-size: .9em;
-		height: calc(800% - 2.1em);
+		max-height: calc(800% - 2.1em);
 		top: 100%;
 		left: 0;
 		display: flex;
 		flex-wrap: wrap;
 		transform: scale3d(1, 0, 1);
 		transform-origin: 50% 0;
-		transition: transform .25s;
-		padding: 0;
+		transition: transform .3s ease-in-out;
+		padding: 3.2em 0 0 0;
 		cursor: initial;
+		box-shadow: 0px .2em .5em rgba(0, 0, 0, 0.3);
+}
+ul.select-options input {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	font-size: 1.2em;
+	z-index: 1;
+	background-color: #fafafa;
+	outline: 0;
+	padding: .6em;
+	border: 0;
+	border-bottom: 1px solid #ddd;
+	text-align: center;
 }
 ul.select-options li,
 ul.select-options h4 {
-		padding: .6em 1em;
+		padding: .8em 1em;
 		opacity: 0;
-		transform: translate3d(0, -25px, 0);
-		transition: opacity .15s, transform .15s;
+		transform: translate3d(0, -20em, 0);
+		transition: opacity .8s, transform .45s;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis
+}
+.select-active li, .select-active h4 {
+	opacity: 1!important;
+	transform: none!important;
 }
 ul.select-options li {
 		cursor: pointer;
@@ -669,13 +688,13 @@ ul.select-options h4 {
 		pointer-events: auto;
 		transform: none
 }
-.select-active ul.select-options li,
+/*.select-active ul.select-options li,
 .select-active ul.select-options h4 {
 		transform: translate3d(0, 0, 0);
 		opacity: 1;
 		transition: none;
 		animation: bounce .65s ease-out
-}
+}*/
 .scanlines:before {
 		content: '';
 		position: absolute;
@@ -800,7 +819,7 @@ ul.select-options h4 {
 		/* transform: translate3d(100%, 0, 0); */
 }
 
-@keyframes bounce {
+/*@keyframes bounce {
 		0% {
 				transform: translate3d(0, -25px, 0);
 				opacity: 0
@@ -821,7 +840,7 @@ ul.select-options h4 {
 				transform: translate3d(0, 0, 0);
 				opacity: 1
 		}
-}
+}*/
 @media all and (min-width: 1500px) {
 		body {
 				font-size: 18px
